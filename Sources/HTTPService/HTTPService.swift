@@ -31,16 +31,38 @@ public class HTTPService {
         return http.makeRequest(route)
     }
     
-    public func requestJson() {
-        
+    public func loadJson(url: String, responseType: Codable) -> Codable {
+        let result: Codable = []
+        requestJson(url: url, responseType: responseType)
+            .receive(on: RunLoop.main)
+            .sink { result in
+                print(result)
+            } receiveValue: { value in
+                result = value
+            }.store(in: &cancellables)
+        return result
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
+    private func requestJson(url: String, responseType: Any) -> AnyPublisher<[Codable], HttpError> {
+        let url = URL(string: url)!
+        let urlRequest = URLRequest(url: url)
+        let route = ServiceLoader<Mock>()
+        route.endPoint = urlRequest
+        let http = RequestService()
+        return http.makeRequest(route)
+    }
+}
+
+struct Mock: Codable {
+    var id: Int
+    var name: String
+    var age: Int
+}
+
+class Mocks {
+    let mockData: [Mock] = [
+        Mock(id: 1, name: "one", age: 10),
+        Mock(id: 2, name: "two", age: 20),
+        Mock(id: 3, name: "three", age: 30),
+    ]
 }
