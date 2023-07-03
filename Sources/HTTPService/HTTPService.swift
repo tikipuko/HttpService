@@ -35,7 +35,6 @@ public class HTTPService {
         requestJson(url: url)
             .receive(on: RunLoop.main)
             .sink { result in
-
                 print("result")
                 print(result)
             } receiveValue: { value in
