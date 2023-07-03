@@ -30,10 +30,9 @@ public class HTTPService {
 //        return http.makeRequest(urlRequest)
 //    }
 
-    public func loadJson(url: String) -> Data {
-        var result: Data? = nil
+    public func loadJson(url: String) -> Data? {
+        var result: Data?
         requestJson(url: url)
-            .receive(on: RunLoop.main)
             .sink { result in
                 print("result")
                 print(result)
