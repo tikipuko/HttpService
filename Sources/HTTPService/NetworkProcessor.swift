@@ -43,11 +43,6 @@ class RequestService: RequestServiceProtocol {
         return URLSession.shared.dataTaskPublisher(for: request)
                 .tryMap { (data, _) -> Data in
                     print("trymap")
-                    sleep(1)
-                    let json = JSONDecoder()
-                    let newData = try json.decode(Todos.self, from: data)
-                    print("newData -> \(newData.title)")
-                    sleep(1)
                     return data
                 }
                 .mapError { error -> HttpError in
@@ -63,9 +58,4 @@ class RequestService: RequestServiceProtocol {
         }
 }
 
-struct Todos: Codable {
-    var userId: Int
-    var id: Int
-    var title: String
-    var completed: Bool
-}
+

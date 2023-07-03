@@ -16,7 +16,6 @@ class doIt {
     func getData() {
         print("before sleep")
         self.json = http.loadJson(url: "https://jsonplaceholder.typicode.com/todos/1")
-        sleep(3)
         print("after sleep")
     }
     
