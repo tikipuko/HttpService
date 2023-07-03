@@ -35,14 +35,12 @@ public class HTTPService {
         requestJson(url: url)
             .receive(on: RunLoop.main)
             .sink { result in
-                sleep(3)
 
                 print("result")
                 print(result)
             } receiveValue: { value in
                 result = value
             }.store(in: &cancellables)
-//        sleep(3)
 
         return result!
     }
@@ -56,16 +54,3 @@ public class HTTPService {
     }
 }
 
-struct Mock: Codable {
-    var id: Int
-    var name: String
-    var age: Int
-}
-
-class Mocks {
-    let mockData: [Mock] = [
-        Mock(id: 1, name: "one", age: 10),
-        Mock(id: 2, name: "two", age: 20),
-        Mock(id: 3, name: "three", age: 30),
-    ]
-}
