@@ -39,15 +39,14 @@ public class HTTPService {
     }
 
     
-    public func processRequest(url: URL) -> AnyPublisher<Data, Error> {
-        return makeRequest(url: url)
+    public func processRequest(urlRequest: URLRequest) -> AnyPublisher<Data, Error> {
+        return makeRequest(urlRequest: urlRequest)
             .map { data in
                 return data }
             .eraseToAnyPublisher()
     }
     
-    private func makeRequest(url: URL) -> AnyPublisher<Data, Error> {
-        let urlRequest = URLRequest(url: url)
+    private func makeRequest(urlRequest: URLRequest) -> AnyPublisher<Data, Error> {
         let http = RequestService()
         return http.makeRequest(request: urlRequest)
     }
