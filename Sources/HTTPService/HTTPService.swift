@@ -1,40 +1,52 @@
 import Foundation
-import UIKit
 import Combine
 
 public class HTTPService {
     
-    var cancellables = Set<AnyCancellable>()
-    
+
     public init() {
         
     }
     
-    public func loadImage(url: String) -> AnyPublisher<Data, Error> {
-        return requestImage(url: url)  //"https://picsum.photos/200/300"
+    public func urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem] = []) -> URL {
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = host
+        components.path = path
+        components.queryItems = queryItems
+        
+        guard let url = components.url else {
+            preconditionFailure("Invalid URL components: \(components)")
+        }
+        return url
+    }
+    
+    public func requestBuilder(url: URL, method: String?, key: String?, header: String?) -> URLRequest {
+        var urlRequest = URLRequest(url: url)
+        
+        guard let method = method else {
+            return urlRequest
+        }
+        
+        guard let key = key, let header = header else {
+            urlRequest.httpMethod = method
+            return urlRequest
+        }
+        
+        urlRequest.setValue(key, forHTTPHeaderField: header)
+        
+        return urlRequest
+    }
+
+    
+    public func processRequest(url: URL) -> AnyPublisher<Data, Error> {
+        return makeRequest(url: url)
             .map { data in
                 return data }
             .eraseToAnyPublisher()
     }
     
-    private func requestImage(url: String) -> AnyPublisher<Data, Error> {
-        let url = URL(string: url)!
-        let urlRequest = URLRequest(url: url)
-        let http = RequestService()
-        return http.makeRequest(request: urlRequest)
-    }
-
-    public func loadJson(url: String) -> AnyPublisher<Data, Error> {
-        return requestJson(url: url)
-        .map { data in
-            return data }
-        .eraseToAnyPublisher()
-        
-    }
-    
-    private func requestJson(url: String) -> AnyPublisher<Data, Error> {
-        print("requestJson")
-        let url = URL(string: url)!
+    private func makeRequest(url: URL) -> AnyPublisher<Data, Error> {
         let urlRequest = URLRequest(url: url)
         let http = RequestService()
         return http.makeRequest(request: urlRequest)

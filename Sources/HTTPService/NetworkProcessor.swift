@@ -9,36 +9,14 @@ import Foundation
 import UIKit
 import Combine
 
-//class RouteEndPoint<Response> {
-//    var endPoint: URLRequest?
-//    var parser: ((Data) -> Response)!
-//}
 
-//class ImageLoader: RouteEndPoint<UIImage?> {
-//
-//    override init() {
-//        super.init()
-//        self.parser = {(data: Data) -> UIImage in
-//            return UIImage(data: data) ?? UIImage()
-//        }
-//    }
-//}
-//
-//class ServiceLoader<T: Codable>: RouteEndPoint<T> {
-//    override init() {
-//        super.init()
-//        self.parser = {(data: Data) -> T in
-//            return try! JSONDecoder().decode(T.self, from: data)
-//        }
-//    }
-//}
 
+///ask about protocols
 protocol RequestServiceProtocol {
     func makeRequest(request: URLRequest) -> AnyPublisher<Data, Error>
 }
 
 class RequestService: RequestServiceProtocol {
-    
     func makeRequest(request: URLRequest) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: request)
                 .tryMap { (data, _) -> Data in
@@ -51,7 +29,6 @@ class RequestService: RequestServiceProtocol {
                         return error.localizedDescription as! Error
                     default:
                         return error.self
-                        
                     }
                 }
                 .eraseToAnyPublisher()
