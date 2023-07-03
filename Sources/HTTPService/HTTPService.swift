@@ -30,20 +30,15 @@ public class HTTPService {
 //        return http.makeRequest(urlRequest)
 //    }
 
-    public func loadJson(url: String) -> Data? {
-        var result: Data?
-        requestJson(url: url)
-            .sink { result in
-                print("result")
-                print(result)
-            } receiveValue: { value in
-                result = value
-            }.store(in: &cancellables)
-
-        return result!
+    public func loadJson(url: String) -> AnyPublisher<Data, Error> {
+        return requestJson(url: url)
+        .map { data in
+            return data }
+        .eraseToAnyPublisher()
+        
     }
     
-    private func requestJson(url: String) -> AnyPublisher<Data, HttpError> {
+    private func requestJson(url: String) -> AnyPublisher<Data, Error> {
         print("requestJson")
         let url = URL(string: url)!
         let urlRequest = URLRequest(url: url)

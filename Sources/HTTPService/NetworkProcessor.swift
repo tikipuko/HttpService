@@ -34,23 +34,23 @@ import Combine
 //}
 
 protocol RequestServiceProtocol {
-    func makeRequest(request: URLRequest) -> AnyPublisher<Data, HttpError>
+    func makeRequest(request: URLRequest) -> AnyPublisher<Data, Error>
 }
 
 class RequestService: RequestServiceProtocol {
     
-    func makeRequest(request: URLRequest) -> AnyPublisher<Data, HttpError> {
+    func makeRequest(request: URLRequest) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: request)
                 .tryMap { (data, _) -> Data in
                     print("trymap")
                     return data
                 }
-                .mapError { error -> HttpError in
+                .mapError { error -> Error in
                     switch error {
                     case URLError.cannotFindHost:
-                        return HttpError.generic(error.localizedDescription)
+                        return error.localizedDescription as! Error
                     default:
-                        return HttpError.noData
+                        return error.self
                         
                     }
                 }
