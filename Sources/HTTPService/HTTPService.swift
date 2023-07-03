@@ -10,25 +10,19 @@ public class HTTPService {
         
     }
     
-//    public func loadImage() -> Data {
-//        var image: Data
-//        requestImage(url: "https://picsum.photos/200/300")
-//            .receive(on: RunLoop.main)
-//            .replaceError(with: image)
-//            .sink { value in
-//                image = value
-////                print("DEBUG ----- \(value.size.with)")
-//            }
-//            .store(in: &cancellables)
-//        return image
-//    }
+    public func loadImage(url: String) -> AnyPublisher<Data, Error> {
+        return requestImage(url: url)  //"https://picsum.photos/200/300"
+            .map { data in
+                return data }
+            .eraseToAnyPublisher()
+    }
     
-//    private func requestImage(url: String) -> AnyPublisher<Data, HttpError> {
-//        let url = URL(string: url)!
-//        let urlRequest = URLRequest(url: url)
-//        let http = RequestService()
-//        return http.makeRequest(urlRequest)
-//    }
+    private func requestImage(url: String) -> AnyPublisher<Data, Error> {
+        let url = URL(string: url)!
+        let urlRequest = URLRequest(url: url)
+        let http = RequestService()
+        return http.makeRequest(request: urlRequest)
+    }
 
     public func loadJson(url: String) -> AnyPublisher<Data, Error> {
         return requestJson(url: url)
