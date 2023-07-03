@@ -10,46 +10,49 @@ public class HTTPService {
         
     }
     
-    public func loadImage(url: String) -> UIImage {
-        var image: UIImage = UIImage(systemName: "camera")!
-        requestImage(url: url)
-            .receive(on: RunLoop.main)
-            .replaceError(with: image)
-            .sink { value in
-                image = value!
-            }
-            .store(in: &cancellables)
-        return image
-    }
+//    public func loadImage() -> Data {
+//        var image: Data
+//        requestImage(url: "https://picsum.photos/200/300")
+//            .receive(on: RunLoop.main)
+//            .replaceError(with: image)
+//            .sink { value in
+//                image = value
+////                print("DEBUG ----- \(value.size.with)")
+//            }
+//            .store(in: &cancellables)
+//        return image
+//    }
     
-    private func requestImage(url: String) -> AnyPublisher<UIImage?, HttpError> {
-        let url = URL(string: url)!
-        let urlRequest = URLRequest(url: url)
-        let route = ImageLoader()
-        route.endPoint = urlRequest
-        let http = RequestService()
-        return http.makeRequest(route)
-    }
-    
-    public func loadJson(url: String, responseType: Codable) -> Codable {
-        let result: Codable = []
-        requestJson(url: url, responseType: responseType)
+//    private func requestImage(url: String) -> AnyPublisher<Data, HttpError> {
+//        let url = URL(string: url)!
+//        let urlRequest = URLRequest(url: url)
+//        let http = RequestService()
+//        return http.makeRequest(urlRequest)
+//    }
+
+    public func loadJson(url: String) -> Data {
+        var result: Data? = nil
+        requestJson(url: url)
             .receive(on: RunLoop.main)
             .sink { result in
+                sleep(3)
+
+                print("result")
                 print(result)
             } receiveValue: { value in
                 result = value
             }.store(in: &cancellables)
-        return result
+//        sleep(3)
+
+        return result!
     }
     
-    private func requestJson(url: String, responseType: Any) -> AnyPublisher<[Codable], HttpError> {
+    private func requestJson(url: String) -> AnyPublisher<Data, HttpError> {
+        print("requestJson")
         let url = URL(string: url)!
         let urlRequest = URLRequest(url: url)
-        let route = ServiceLoader<Mock>()
-        route.endPoint = urlRequest
         let http = RequestService()
-        return http.makeRequest(route)
+        return http.makeRequest(request: urlRequest)
     }
 }
 
