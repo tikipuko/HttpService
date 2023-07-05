@@ -8,6 +8,11 @@ public class HTTPService {
         
     }
     
+    public func urlBuilder(url: String) -> URL {
+        let url = URL(string: url)
+        return url!
+    }
+    
     public func urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem] = []) -> URL {
         var components = URLComponents()
         components.scheme = scheme
@@ -21,7 +26,7 @@ public class HTTPService {
         return url
     }
     
-    public func requestBuilder(url: URL, method: String?, key: String?, header: String?) -> URLRequest {
+    public func requestBuilder(url: URL, method: String? = nil, key: String? = nil, header: String? = nil) -> URLRequest {
         var urlRequest = URLRequest(url: url)
         
         guard let method = method else {
