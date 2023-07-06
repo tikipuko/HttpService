@@ -38,7 +38,7 @@ let url = urlBuilder(url: String)
 
 > Returns: URL to enable your URLRequest
 ``` swift
-let url urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem])
+let url = urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem])
 ```
 
 ## METHOD requestBuilder()
