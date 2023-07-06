@@ -1,18 +1,33 @@
+//
+//  File.swift
+//
+//
+//  Created by Correia, Jose Bastos on 30/06/2023.
+//
+
 import Foundation
 import Combine
 
 public class HTTPService {
     
-
-    public init() {
-        
-    }
+    /// initializer
+    public init() {}
     
+    /// Method to build your URL from an absolute string
+    /// - Parameter url: Absolute URL:  String
+    /// - Returns: URL that enables you to build your URLRequest
     public func urlBuilder(url: String) -> URL {
         let url = URL(string: url)
         return url!
     }
     
+    /// Method to build your custom URL
+    /// - Parameters:
+    ///   - scheme: "https"
+    ///   - host: "amazonAPI.com
+    ///   - path: "/user/1"
+    ///   - queryItems: "Key : Value pairs that you want to search
+    /// - Returns: URL that enables you to build your URLRequest
     public func urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem] = []) -> URL {
         var components = URLComponents()
         components.scheme = scheme
@@ -26,6 +41,13 @@ public class HTTPService {
         return url
     }
     
+    /// urlRequest() is a custom method that builds you request with the parameters that you need.
+    /// - Parameters:
+    ///   - url: URL from where you pretend to make your request.
+    ///   - method: request method if needed, like "GET", "POST, "PUT"..
+    ///   - key: API secret key, if needed.
+    ///   - header: API request message, if needed.
+    /// - Returns: URLRequest to enable you request.
     public func requestBuilder(url: URL, method: String? = nil, key: String? = nil, header: String? = nil) -> URLRequest {
         var urlRequest = URLRequest(url: url)
         
@@ -44,16 +66,15 @@ public class HTTPService {
     }
 
     
+    /// Method that handle any HTTP Request
+    /// - Parameter urlRequest: urlRequest setted that enable you to make your request
+    /// - Returns: Return a Publisher that could be of type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
     public func processRequest(urlRequest: URLRequest) -> AnyPublisher<Data, Error> {
-        return makeRequest(urlRequest: urlRequest)
+        let http = RequestService()
+        return http.makeRequest(request: urlRequest)
             .map { data in
                 return data }
             .eraseToAnyPublisher()
-    }
-    
-    private func makeRequest(urlRequest: URLRequest) -> AnyPublisher<Data, Error> {
-        let http = RequestService()
-        return http.makeRequest(request: urlRequest)
     }
 }
 
