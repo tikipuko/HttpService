@@ -25,10 +25,10 @@ public class HTTPService {
     /// - Parameters:
     ///   - scheme: "https"
     ///   - host: "amazonAPI.com
-    ///   - path: "/user/1"
-    ///   - queryItems: "Key : Value pairs that you want to search
+    ///   - path: "/user/1", if needed
+    ///   - queryItems: "Key : Value pairs that you want to search, if needed
     /// - Returns: URL that enables you to build your URLRequest
-    public func urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem] = []) -> URL {
+    public func urlBuilder(scheme: String, host: String, path: String = "", queryItems: [URLQueryItem] = []) -> URL {
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
@@ -44,7 +44,7 @@ public class HTTPService {
     /// urlRequest() is a custom method that builds you request with the parameters that you need.
     /// - Parameters:
     ///   - url: URL from where you pretend to make your request.
-    ///   - method: request method if needed, like "GET", "POST, "PUT"..
+    ///   - method: request method like "GET", "POST, "PUT"..,  if needed.
     ///   - key: API secret key, if needed.
     ///   - header: API request message, if needed.
     /// - Returns: URLRequest to enable you request.

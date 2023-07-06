@@ -19,7 +19,7 @@ requestBuilder is a custom method to help you setting your URL() type variable.
 
 > Returns: URL that enables you to build your URLRequest
 ``` 
-func urlBuilder(url: String) -> URL
+let url = urlBuilder(url: String)
 ```
 
 * You can build your URL dissecting the components for the most complex URL's using: 
@@ -28,9 +28,17 @@ func urlBuilder(url: String) -> URL
 
 >> url: URL from where you pretend to make your request.
 
+>> scheme: "https".
+
+>> host: "myApi.com".
+
+>> path: "/user/1", if needed.
+
+>> queryItems: "Key : Value" pairs that you want to search, if needed.
+
 > Returns: URL to enable your URLRequest
 ```
-func urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem]) -> URL
+let url urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem])
 ```
 
 ## METHOD urlRequest()
@@ -41,7 +49,7 @@ urlRequest() is a custom method that builds your request with the parameters tha
 
 >> url: URL from where you pretend to make your request.
 
->> method: request method if needed, like "GET", "POST, "PUT"..
+>> method: request method like "GET", "POST, "PUT"..,  if needed.
 
 >> key: API secret key, if needed.
 
@@ -49,12 +57,12 @@ urlRequest() is a custom method that builds your request with the parameters tha
 
 > Returns: URLRequest to enable your request.
 ```
-func requestBuilder(url: URL, method: String? = nil, key: String? = nil, header: String? = nil) -> URLRequest
+let urlRequest = requestBuilder(url: URL, method: String, key: String, header: String)
 ```
 
 ## METHOD processRequest()
 
-processRequest() is the network engine that returns a publisher of type data or error
+processRequest() is the network engine that uses _Combine_ to returns a publisher of type data or error
 
 > Parameter:
 
@@ -62,7 +70,7 @@ processRequest() is the network engine that returns a publisher of type data or 
 
 > Returns: Publisher type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
 ```
-func processRequest(urlRequest: URLRequest) -> AnyPublisher<Data, Error>
+processRequest(urlRequest: URLRequest)
 ```
 
 ## Handling on Client Side Step by Step 
