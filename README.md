@@ -56,7 +56,7 @@ urlRequest() is a custom method that builds your request with the parameters tha
 >> header: API request message, if needed.
 
 > Returns: URLRequest to enable your request.
-```
+``` swift
 let urlRequest = requestBuilder(url: URL, method: String, key: String, header: String)
 ```
 
@@ -69,7 +69,7 @@ processRequest() is the network engine that uses _Combine_ to returns a publishe
 >> urlRequest: urlRequest setted that enable you to make your request
 
 > Returns: Publisher type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
-```
+```swift
 processRequest(urlRequest: URLRequest)
 ```
 
