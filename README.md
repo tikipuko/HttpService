@@ -18,7 +18,7 @@ requestBuilder is a custom method to help you setting your URL() type variable.
 >> url: Absolute URL:  String
 
 > Returns: URL that enables you to build your URLRequest
-``` 
+``` swift
 let url = urlBuilder(url: String)
 ```
 
@@ -37,11 +37,11 @@ let url = urlBuilder(url: String)
 >> queryItems: "Key : Value" pairs that you want to search, if needed.
 
 > Returns: URL to enable your URLRequest
-```
+``` swift
 let url urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem])
 ```
 
-## METHOD urlRequest()
+## METHOD requestBuilder()
 
 urlRequest() is a custom method that builds your request with the parameters that you need.
 
@@ -69,7 +69,7 @@ processRequest() is the network engine that uses _Combine_ to returns a publishe
 >> urlRequest: urlRequest setted that enable you to make your request
 
 > Returns: Publisher type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
-```swift
+``` swift
 processRequest(urlRequest: URLRequest)
 ```
 
@@ -81,7 +81,7 @@ processRequest(urlRequest: URLRequest)
 4. Setup your URLRequest
 5. Execute the request and handle the data.
 
-```
+``` swift
 import HTTPService
 let http = HTTPService()
 let url = http.urlBuilder(url: "your url")
