@@ -41,7 +41,7 @@ public class HTTPService {
         return url
     }
     
-    /// urlRequest() is a custom method that builds you request with the parameters that you need.
+    /// Method to build your custom request with the parameters that you need.
     /// - Parameters:
     ///   - url: URL from where you pretend to make your request.
     ///   - method: request method like "GET", "POST, "PUT"..,  if needed.
