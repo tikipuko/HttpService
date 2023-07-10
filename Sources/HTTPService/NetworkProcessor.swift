@@ -18,7 +18,8 @@ final class RequestService {
                 .mapError { error -> Error in
                     switch error {
                     case URLError.cannotFindHost:
-                        return error.localizedDescription as! Error
+                        print(error.localizedDescription)
+                        return URLError.badURL as! Error
                     default:
                         return error.self
                     }
