@@ -8,12 +8,16 @@
 import Foundation
 import Combine
 
-public class HTTPService {
-    
-    private let networkProcessor: RequestService = .init()
-    
+/// Core class HTTPService
+final public class HTTPService {
+        
     /// initializer
     public init() {}
+    
+}
+
+/// Extension to build URL's
+extension HTTPService {
     
     /// Method to build your URL from an absolute string
     /// - Parameter url: Absolute URL:  String
@@ -42,6 +46,10 @@ public class HTTPService {
         }
         return url
     }
+}
+
+/// Extension to build URLRequest's
+extension HTTPService {
     
     /// Method to build your custom request with the parameters that you need.
     /// - Parameters:
@@ -66,16 +74,18 @@ public class HTTPService {
         
         return urlRequest
     }
+}
 
+/// Extension to process HTTPService
+extension HTTPService {
     
     /// Method that handle any HTTP Request
     /// - Parameter urlRequest: urlRequest setted that enable you to make your request
     /// - Returns: Return a Publisher that could be of type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
     public func processRequest(urlRequest: URLRequest) -> AnyPublisher<Data, Error> {
-        return networkProcessor.makeRequest(request: urlRequest)
+        return RequestService.makeRequest(request: urlRequest)
             .map { data in
                 return data }
             .eraseToAnyPublisher()
     }
 }
-

@@ -8,8 +8,13 @@
 import Foundation
 import Combine
 
-class RequestService {
-    internal func makeRequest(request: URLRequest) -> AnyPublisher<Data, Error> {
+/// Class to execute Network Engine
+final class RequestService {
+    
+    ///  Method to return any Data or Error from any request.
+    /// - Parameter request: URLRequest to execute the connection.
+    /// - Returns: Pretended Data or Error
+    internal static func makeRequest(request: URLRequest) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: request)
                 .tryMap { (data, _) -> Data in
                     return data
@@ -18,10 +23,12 @@ class RequestService {
                     switch error {
                     case URLError.cannotFindHost:
                         print(error.localizedDescription)
-                        return URLError.badURL as! Error
+                    case URLError.badURL:
+                        print(request.url!.absoluteString)
                     default:
-                        return error.self
+                        print("Unkown Error")
                     }
+                    return error
                 }
                 .eraseToAnyPublisher()
         }
