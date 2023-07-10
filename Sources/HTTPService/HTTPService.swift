@@ -8,13 +8,17 @@
 import Foundation
 import Combine
 
-public class HTTPService {
+/// Core class to create everything to process HTTP Requests
+final public class HTTPService {
     
     private let networkProcessor: RequestService = .init()
     
     /// initializer
     public init() {}
-    
+}
+
+/// Extension to build the URL
+extension HTTPService {
     /// Method to build your URL from an absolute string
     /// - Parameter url: Absolute URL:  String
     /// - Returns: URL that enables you to build your URLRequest
@@ -42,7 +46,10 @@ public class HTTPService {
         }
         return url
     }
-    
+}
+
+/// Extension to build the URLRequest
+extension HTTPService {
     /// Method to build your custom request with the parameters that you need.
     /// - Parameters:
     ///   - url: URL from where you pretend to make your request.
@@ -66,8 +73,10 @@ public class HTTPService {
         
         return urlRequest
     }
+}
 
-    
+/// Extension to process the Network Request
+extension HTTPService {
     /// Method that handle any HTTP Request
     /// - Parameter urlRequest: urlRequest setted that enable you to make your request
     /// - Returns: Return a Publisher that could be of type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
