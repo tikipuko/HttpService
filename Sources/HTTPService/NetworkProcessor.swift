@@ -8,8 +8,7 @@
 import Foundation
 import Combine
 
-/// Class for retrieving data from a server.
-final class RequestService {
+class RequestService {
     internal func makeRequest(request: URLRequest) -> AnyPublisher<Data, Error> {
         return URLSession.shared.dataTaskPublisher(for: request)
                 .tryMap { (data, _) -> Data in
@@ -25,7 +24,7 @@ final class RequestService {
                     }
                 }
                 .eraseToAnyPublisher()
-    }
+        }
 }
 
 
