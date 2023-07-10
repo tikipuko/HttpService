@@ -21,10 +21,10 @@ final class RequestService {
                 }
                 .mapError { error -> Error in
                     switch error {
-                    case URLError.cannotFindHost:
-                        print(error.localizedDescription)
                     case URLError.badURL:
                         print(request.url!.absoluteString)
+                    case URLError.cannotFindHost, URLError.notConnectedToInternet:
+                        print(error.localizedDescription)
                     default:
                         print("Unkown Error")
                     }
