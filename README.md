@@ -38,7 +38,7 @@ let url = urlBuilder(url: String)
 
 > Returns: URL to enable your URLRequest
 ``` swift
-let url = urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem])
+func urlBuilder(scheme: String, host: String, path: String, queryItems: [URLQueryItem]) -> URL
 ```
 
 ## METHOD requestBuilder()
@@ -47,7 +47,7 @@ urlRequest() is a custom method that builds your request with the parameters tha
 
 > Parameters:
 
->> url: URL from where you pretend to make your request.
+>> url: URL from where you pretend to make your request (use urlBuilder return value).
 
 >> method: request method like "GET", "POST, "PUT"..,  if needed.
 
@@ -57,7 +57,7 @@ urlRequest() is a custom method that builds your request with the parameters tha
 
 > Returns: URLRequest to enable your request.
 ``` swift
-let urlRequest = requestBuilder(url: URL, method: String, key: String, header: String)
+func requestBuilder(url: URL, method: String, key: String, header: String) -> URLRequest
 ```
 
 ## METHOD processRequest()
@@ -70,7 +70,7 @@ processRequest() is the network engine that uses _Combine_ to returns a publishe
 
 > Returns: Publisher type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
 ``` swift
-processRequest(urlRequest: URLRequest)
+func processRequest(urlRequest: URLRequest) -> AnyPublisher<Data, Error>
 ```
 
 ## Handling on Client Side Step by Step 
@@ -84,7 +84,7 @@ processRequest(urlRequest: URLRequest)
 ``` swift
 import HTTPService
 let http = HTTPService()
-let url = http.urlBuilder(url: "your url")
+let url = http.urlBuilder(url: "myUrlString")
 let urlRequest = http.requestBuilder(url: url)
 
 http.processRequest(urlRequest: urlRequest)
@@ -94,9 +94,9 @@ http.processRequest(urlRequest: urlRequest)
         }, receiveValue: { data in
             do {
                 /// in case to handle json
-                self.myData = try JSONDecoder().decode(YourStruct.self, from: data)  
+                self.myData = try JSONDecoder().decode(MyCodableStruct.self, from: data)  
                 /// in case to handle imageView
-                self.picture.image = UIImage(data: data)                               
+                self.myPicture.image = UIImage(data: data)                               
             } catch {
                  print("Handle Decoder Error")
             }

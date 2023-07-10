@@ -10,6 +10,8 @@ import Combine
 
 public class HTTPService {
     
+    private let networkProcessor: RequestService = .init()
+    
     /// initializer
     public init() {}
     
@@ -70,8 +72,7 @@ public class HTTPService {
     /// - Parameter urlRequest: urlRequest setted that enable you to make your request
     /// - Returns: Return a Publisher that could be of type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
     public func processRequest(urlRequest: URLRequest) -> AnyPublisher<Data, Error> {
-        let http = RequestService()
-        return http.makeRequest(request: urlRequest)
+        return networkProcessor.makeRequest(request: urlRequest)
             .map { data in
                 return data }
             .eraseToAnyPublisher()
