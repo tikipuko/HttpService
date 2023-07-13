@@ -7,7 +7,7 @@
 
 import Foundation
 
-open class EndPoint {
+public class EndPoint {
     
     private var host: String
     private var environment: String
@@ -53,7 +53,7 @@ open class EndPoint {
     }
 }
 
-open class AmazonEndpoint: EndPoint {
+public class AmazonEndpoint: EndPoint {
     
     public init(path: String) {
         super.init(host: "cf5dxst1y4.execute-api.eu-west-1.amazonaws.com",
