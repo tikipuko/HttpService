@@ -84,7 +84,7 @@ extension HTTPService {
     /// - Returns: Return a Publisher that could be of type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
     public func processRequest<T>(endPoint: EndPoint, responseDataType: T.Type) -> AnyPublisher<T, Error> {
         let decoder = RouteEndPoint<T>()
-        decoder.endPoint = endPoint
+        decoder.endPoint = .products
         return RequestService.makeRequest(decoder)
             .map { data in
                 return data }

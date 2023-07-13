@@ -9,13 +9,12 @@ import Foundation
 import UIKit
 
 public class RouteEndPoint<ResponseDataType> {
-    var endPoint: EndPoint?
+    var endPoint: Route?
     var parser: DataParser<ResponseDataType>!
-    
-    public init() {}
+
 }
 
-class DataParser<T> {
+public class DataParser<T> {
     private let parser: (Data) throws -> T
     
     init(parser: @escaping (Data) throws -> T) {
