@@ -19,7 +19,7 @@ final class RequestService {
         return URLSession.shared.dataTaskPublisher(for: request.endPoint!.request)
                 .tryMap { (data, _) -> ResponseDataType in
                     guard let parser = request.parser else {
-                        return Error.self as! ResponseDataType
+                        return URLError.cannotParseResponse as! ResponseDataType
                     }
                     return try parser.parse(data: data)
                 }
