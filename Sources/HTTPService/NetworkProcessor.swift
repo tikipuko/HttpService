@@ -17,25 +17,27 @@ final class RequestService {
     
     internal static func makeRequest<ResponseDataType>(_ request: RouteEndPoint<ResponseDataType>) -> AnyPublisher<ResponseDataType, Error> {
         return URLSession.shared.dataTaskPublisher(for: request.endPoint!.request)
-                .tryMap { (data, _) -> ResponseDataType in
-                    guard let parser = request.parser else {
-                        return URLError.cannotParseResponse as! ResponseDataType
-                    }
-                    return try parser.parse(data: data)
+            .tryMap { (data, error) -> ResponseDataType in
+                guard let parser = request.parser else {
+                    throw error as! Error
                 }
-                .mapError { error -> Error in
-                    switch error {
-                    case URLError.badURL:
-                        print(request.endPoint!.request.url!.absoluteString)
-                    case URLError.cannotFindHost, URLError.notConnectedToInternet:
-                        print(error.localizedDescription)
-                    default:
-                        print("Unkown Error")
-                    }
-                    return error
+                return parser(data)
+            }
+            .mapError { error -> Error in
+                switch error {
+                case URLError.badURL:
+                    print(request.endPoint!.request.url!.absoluteString)
+                case URLError.cannotFindHost, URLError.notConnectedToInternet:
+                    print(error.localizedDescription)
+                default:
+                    print("Unknown Error")
                 }
-                .eraseToAnyPublisher()
-        }
+                return error
+            }
+            .eraseToAnyPublisher()
+    }
+
+
 }
 
 
