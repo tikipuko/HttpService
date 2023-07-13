@@ -11,6 +11,8 @@ import UIKit
 public class RouteEndPoint<ResponseDataType> {
     var endPoint: EndPoint?
     var parser: DataParser<ResponseDataType>!
+    
+    public init() {}
 }
 
 class DataParser<T> {
