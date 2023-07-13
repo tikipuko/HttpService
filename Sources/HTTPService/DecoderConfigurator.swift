@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class RouteEndPoint<ResponseDataType> {
+public class RouteEndPoint<ResponseDataType> {
     var endPoint: EndPoint?
     var parser: DataParser<ResponseDataType>!
 }
