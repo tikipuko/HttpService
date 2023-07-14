@@ -16,7 +16,7 @@ final class RequestService {
     /// - Returns: Pretended Data or Error
     
     internal static func makeRequest<ResponseDataType>(_ request: RouteEndPoint<ResponseDataType>) -> AnyPublisher<ResponseDataType, Error> {
-        return URLSession.shared.dataTaskPublisher(for: request.endPoint.httpRequest)
+        return URLSession.shared.dataTaskPublisher(for: request.endPoint!.httpRequest)
             .tryMap { (data, error) -> ResponseDataType in
                 guard let parser = request.parser else {
                     throw error as! Error
@@ -26,7 +26,7 @@ final class RequestService {
             .mapError { error -> Error in
                 switch error {
                 case URLError.badURL:
-                    print(request.endPoint.url)
+                    print(request.endPoint!.url)
                 case URLError.cannotFindHost, URLError.notConnectedToInternet:
                     print(error.localizedDescription)
                 default:

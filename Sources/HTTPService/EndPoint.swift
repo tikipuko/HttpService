@@ -11,9 +11,9 @@ open class EndPoint {
     
     private var host: String
     private var path: String
-    
+    private var queryItems: [URLQueryItem] = []
+
     var httpMethod: String  = "GET"
-    public var queryItems: [URLQueryItem] = []
     var httpKey: String  { get { "" }}
     var httpHeader: String { get { "" }}
     
@@ -40,12 +40,11 @@ open class EndPoint {
         guard let url = components.url else {
             preconditionFailure("Invalid URL components: \(components)")
         }
-        
         return url
     }
     
     public func urlSetQueryString(_ newItems: [URLQueryItem]) -> Self {
-        queryItems = newItems
+        self.queryItems = newItems
         return self
     }
 }
