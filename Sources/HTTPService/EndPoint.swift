@@ -13,9 +13,9 @@ open class EndPoint {
     private var path: String
     private var queryItems: [URLQueryItem] = []
 
-    var httpMethod: String  = "GET"
-    var httpKey: String  { get { "" }}
-    var httpHeader: String { get { "" }}
+    public var httpMethod: String  = "GET"
+    public var httpKey: String  { get { "" }}
+    public var httpHeader: String { get { "" }}
     
     public init(host: String,
                 path: String) {
