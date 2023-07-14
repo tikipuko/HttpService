@@ -9,17 +9,17 @@ import Foundation
 import UIKit
 
 open class RouteEndPoint<ResponseDataType> {
-    var endPoint: URLRequest!
+    var endPoint: EndPoint
     var parser: ((Data) -> ResponseDataType)!
     
-    public init(endPoint: URLRequest!) {
+    public init(endPoint: EndPoint) {
         self.endPoint = endPoint
     }
 }
 
 public class ImageLoader: RouteEndPoint<UIImage?> {
-    public init(_ urlRequest: URLRequest) {
-        super.init(endPoint: urlRequest)
+    public init(_ endPoint: EndPoint) {
+        super.init(endPoint: endPoint)
         self.parser = { (data: Data) -> UIImage? in
             return UIImage(data: data)
         }
@@ -27,8 +27,8 @@ public class ImageLoader: RouteEndPoint<UIImage?> {
 }
 
 public class JsonLoader<T: Codable>: RouteEndPoint<T> {
-    public init(_ urlRequest: URLRequest) {
-        super.init(endPoint: urlRequest)
+    public init(_ endPoint: EndPoint) {
+        super.init(endPoint: endPoint)
         self.parser = {(data: Data) -> T in
             return try! JSONDecoder().decode(T.self, from: data)
         }
