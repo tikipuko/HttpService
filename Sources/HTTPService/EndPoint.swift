@@ -7,10 +7,9 @@
 
 import Foundation
 
-public class EndPoint {
+open class EndPoint {
     
     private var host: String
-    private var environment: String
     private var path: String
     
     var httpMethod: String  = "GET"
@@ -19,11 +18,9 @@ public class EndPoint {
     var httpHeader: String { get { "" }}
     
     public init(host: String,
-         path: String,
-         environment: String) {
+                path: String) {
         self.host = host
         self.path = path
-        self.environment = environment
     }
     
     var httpRequest: URLRequest {
@@ -37,7 +34,7 @@ public class EndPoint {
         var components = URLComponents()
         components.scheme = "https"
         components.host = self.host
-        components.path = "/\(environment)/\(path)"
+        components.path = "/\(path)"
         components.queryItems = queryItems
         
         guard let url = components.url else {
