@@ -17,7 +17,7 @@ open class RouteEndPoint<ResponseDataType> {
     }
 }
 
-class ImageLoader: RouteEndPoint<UIImage?> {
+public class ImageLoader: RouteEndPoint<UIImage?> {
     init(url: URL) {
         let urlRequest = URLRequest(url: url)
         super.init(endPoint: urlRequest)
@@ -28,7 +28,7 @@ class ImageLoader: RouteEndPoint<UIImage?> {
 }
 
 
-class ServiceLoader<T: Codable>: RouteEndPoint<T> {
+public class ServiceLoader<T: Codable>: RouteEndPoint<T> {
     init(endPoint: URLRequest) {
         super.init(endPoint: endPoint)
         self.parser = {(data: Data) -> T in
