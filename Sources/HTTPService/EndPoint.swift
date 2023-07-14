@@ -44,7 +44,7 @@ open class EndPoint {
         return url
     }
     
-    func urlSetQueryString(_ newItems: [URLQueryItem]) -> Self {
+    public func urlSetQueryString(_ newItems: [URLQueryItem]) -> Self {
         queryItems = newItems
         return self
     }
