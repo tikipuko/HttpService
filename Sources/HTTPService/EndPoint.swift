@@ -23,7 +23,7 @@ open class EndPoint {
         self.path = path
     }
     
-    var httpRequest: URLRequest {
+    public var httpRequest: URLRequest {
         var urlRequest = URLRequest(url: self.url)
         urlRequest.httpMethod = self.httpMethod
         urlRequest.setValue(self.httpKey, forHTTPHeaderField: self.httpHeader)
