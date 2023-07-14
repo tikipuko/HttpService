@@ -82,9 +82,9 @@ extension HTTPService {
     /// Method that handle any HTTP Request
     /// - Parameter urlRequest: urlRequest setted that enable you to make your request
     /// - Returns: Return a Publisher that could be of type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
-    public func processRequest<T>(endPoint: Route, responseDataType: T.Type) -> AnyPublisher<T, Error> {
-        let decoder = RouteEndPoint<T>()
-        decoder.endPoint = .products
+    public func processRequest<T>(endPoint: RouteEndPoint<T>, responseDataType: T.Type) -> AnyPublisher<T, Error> {
+        let decoder = endPoint
+//        decoder.endPoint = .products
         return RequestService.makeRequest(decoder)
             .map { data in
                 return data }
