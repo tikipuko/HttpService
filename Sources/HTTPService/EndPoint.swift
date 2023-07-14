@@ -13,7 +13,7 @@ open class EndPoint {
     private var path: String
     
     var httpMethod: String  = "GET"
-    var queryItems: [URLQueryItem] = []
+    public var queryItems: [URLQueryItem] = []
     var httpKey: String  { get { "" }}
     var httpHeader: String { get { "" }}
     
