@@ -22,7 +22,7 @@ extension HTTPService {
     /// Method to build your URL from an absolute string
     /// - Parameter url: Absolute URL:  String
     /// - Returns: URL that enables you to build your URLRequest
-    public func urlBuilder(url: String) -> URL {
+    public func urlBuilder(_ url: String) -> URL {
         let url = URL(string: url)
         return url!
     }
@@ -58,7 +58,7 @@ extension HTTPService {
     ///   - key: API secret key, if needed.
     ///   - header: API request message, if needed.
     /// - Returns: URLRequest to enable you request.
-    public func requestBuilder(url: URL, method: String? = nil, key: String? = nil, header: String? = nil) -> URLRequest {
+    public func requestBuilder(_ url: URL, method: String? = nil, key: String? = nil, header: String? = nil) -> URLRequest {
         var urlRequest = URLRequest(url: url)
         
         guard let method = method else {
@@ -82,9 +82,8 @@ extension HTTPService {
     /// Method that handle any HTTP Request
     /// - Parameter urlRequest: urlRequest setted that enable you to make your request
     /// - Returns: Return a Publisher that could be of type Data or Error if there is any connection problem, that Data still needs to be transformed on the cliente side.
-    public func processRequest<T>(endPoint: RouteEndPoint<T>) -> AnyPublisher<T, Error> {
+    public func processRequest<T>(_ endPoint: RouteEndPoint<T>) -> AnyPublisher<T, Error> {
         let decoder = endPoint
-//        decoder.endPoint = .products
         return RequestService.makeRequest(decoder)
             .map { data in
                 return data }

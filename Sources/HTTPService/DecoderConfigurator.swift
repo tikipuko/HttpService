@@ -18,8 +18,7 @@ open class RouteEndPoint<ResponseDataType> {
 }
 
 public class ImageLoader: RouteEndPoint<UIImage?> {
-    public init(url: URL) {
-        let urlRequest = URLRequest(url: url)
+    public init(_ urlRequest: URLRequest) {
         super.init(endPoint: urlRequest)
         self.parser = { (data: Data) -> UIImage? in
             return UIImage(data: data)
@@ -27,10 +26,9 @@ public class ImageLoader: RouteEndPoint<UIImage?> {
     }
 }
 
-
-public class ServiceLoader<T: Codable>: RouteEndPoint<T> {
-    public init(endPoint: URLRequest) {
-        super.init(endPoint: endPoint)
+public class JsonLoader<T: Codable>: RouteEndPoint<T> {
+    public init(_ urlRequest: URLRequest) {
+        super.init(endPoint: urlRequest)
         self.parser = {(data: Data) -> T in
             return try! JSONDecoder().decode(T.self, from: data)
         }
