@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 open class RouteEndPoint<ResponseDataType> {
-    var endPoint: EndPoint?
-    var parser: ((Data) -> ResponseDataType)!
+    open var endPoint: EndPoint?
+    open var parser: ((Data) -> ResponseDataType)!
 }
 
 public class ImageLoader: RouteEndPoint<UIImage?> {
