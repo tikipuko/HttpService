@@ -34,8 +34,8 @@ open class EndPoint {
         var components = URLComponents()
         components.scheme = "https"
         components.host = self.host
-        components.path = "/\(path)"
-        components.queryItems = queryItems
+        components.path = "/\(self.path)"
+        components.queryItems = self.queryItems
         
         guard let url = components.url else {
             preconditionFailure("Invalid URL components: \(components)")
@@ -43,7 +43,10 @@ open class EndPoint {
         return url
     }
     
-    public func urlSetQueryString(_ newItems: [URLQueryItem]) -> Self {
+    public func urlSetQueryString(_ newItems: [URLQueryItem]?) -> Self {
+        guard let newItems = newItems else {
+            return self
+        }
         self.queryItems = newItems
         return self
     }
