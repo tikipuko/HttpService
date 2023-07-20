@@ -13,9 +13,9 @@ open class EndPoint {
     private var path: String
     private var queryItems: [URLQueryItem] = []
     
-    open var httpMethod: String? { get { nil }}
-    open var httpKey: String?  { get { nil }}
-    open var httpHeader: String? { get { nil }}
+    var httpMethod: String? = nil
+    var httpKey: String? = nil
+    var httpHeader: String? = nil
     
     public init(host: String,
                 path: String) {
@@ -23,7 +23,17 @@ open class EndPoint {
         self.path = path
     }
     
-    public var httpRequest: URLRequest {
+    open func httpRequestBuilder(_ newHttpMethod: String? = nil,
+                                   _ newHttpKey: String? = nil,
+                                   _ newHttpHeader: String? = nil) {
+        var urlRequest = URLRequest(url: self.url)
+        self.httpMethod = newHttpMethod
+        self.httpKey = newHttpKey
+        self.httpHeader = newHttpHeader
+        
+    }
+    
+    var httpRequest: URLRequest {
         var urlRequest = URLRequest(url: self.url)
         
         guard let newHttpMethod = self.httpMethod else { return urlRequest }
