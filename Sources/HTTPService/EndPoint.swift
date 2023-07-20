@@ -13,9 +13,9 @@ open class EndPoint {
     private var path: String
     private var queryItems: [URLQueryItem] = []
     
-    open var httpMethod: String { get { "GET" }}
-    open var httpKey: String  { get { "" }}
-    open var httpHeader: String { get { "" }}
+    open var httpMethod: String? { get { nil }}
+    open var httpKey: String?  { get { nil }}
+    open var httpHeader: String? { get { nil }}
     
     public init(host: String,
                 path: String) {
@@ -25,8 +25,15 @@ open class EndPoint {
     
     public var httpRequest: URLRequest {
         var urlRequest = URLRequest(url: self.url)
-        urlRequest.httpMethod = self.httpMethod
-        urlRequest.setValue(self.httpKey, forHTTPHeaderField: self.httpHeader)
+        
+        guard let newHttpMethod = self.httpMethod else { return urlRequest }
+        urlRequest.httpMethod = newHttpMethod
+        
+        guard let newHttpKey = self.httpKey,
+              let newHttpHeader = self.httpHeader else { return urlRequest}
+        
+        urlRequest.setValue(newHttpKey, forHTTPHeaderField: newHttpHeader)
+        
         return urlRequest
     }
     
