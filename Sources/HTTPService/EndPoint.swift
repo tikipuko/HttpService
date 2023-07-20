@@ -23,7 +23,7 @@ open class EndPoint {
         self.path = path
     }
     
-    open func httpRequestBuilder(_ newHttpMethod: String? = nil,
+    public func httpRequestBuilder(_ newHttpMethod: String? = nil,
                                    _ newHttpKey: String? = nil,
                                    _ newHttpHeader: String? = nil) {
         var urlRequest = URLRequest(url: self.url)
