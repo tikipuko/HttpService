@@ -13,9 +13,10 @@ open class EndPoint {
     private var path: String
     private var queryItems: [URLQueryItem] = []
     
-    var httpMethod: String? = nil
-    var httpKey: String? = nil
-    var httpHeader: String? = nil
+    private var httpMethod: String? = nil
+    private var httpKey: String? = nil
+    private var httpHeader: String? = nil
+
     
     public init(host: String,
                 path: String) {
@@ -23,27 +24,30 @@ open class EndPoint {
         self.path = path
     }
     
-    public func httpRequestBuilder(_ newHttpMethod: String? = nil,
-                                   _ newHttpKey: String? = nil,
-                                   _ newHttpHeader: String? = nil) {
-        var urlRequest = URLRequest(url: self.url)
-        self.httpMethod = newHttpMethod
-        self.httpKey = newHttpKey
-        self.httpHeader = newHttpHeader
-        
-    }
+//    public init(host: String,
+//                path: String,
+//                httpMethod: String? = nil,
+//                httpKey: String? = nil,
+//                httpHeader: String? = nil) {
+//        self.host = host
+//        self.path = path
+//        guard let httpMethod else { return }
+//        self.httpMethod = httpMethod
+//        guard let httpKey else { return }
+//        self.httpKey = httpKey
+//        guard let httpHeader else { return }
+//        self.httpHeader = httpHeader
+//    }
     
-    var httpRequest: URLRequest {
+    public var httpRequest: URLRequest {
         var urlRequest = URLRequest(url: self.url)
         
-        guard let newHttpMethod = self.httpMethod else { return urlRequest }
+        guard let newHttpMethod = self.httpMethod else { return urlRequest}
         urlRequest.httpMethod = newHttpMethod
         
         guard let newHttpKey = self.httpKey,
-              let newHttpHeader = self.httpHeader else { return urlRequest}
-        
+              let newHttpHeader = self.httpHeader else { return urlRequest }
         urlRequest.setValue(newHttpKey, forHTTPHeaderField: newHttpHeader)
-        
         return urlRequest
     }
     
